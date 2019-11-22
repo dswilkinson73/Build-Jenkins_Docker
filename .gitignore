@@ -7,3 +7,6 @@
 
 # .tfvars files
 *.tfvars
+
+.Dockerfile.swp
+jenkins.war
