@@ -3,9 +3,13 @@ FROM ubuntu:18.04
 LABEL maintainer = "David S. Wilkinson"
 
 RUN apt-get update && \
+  apt-get install -y software-properties-common && \
   apt-get install default-jre -y && \
   apt-get install curl unzip -y && \
   apt-get install awscli -y
+
+RUN add-apt-repository -y ppa:ansible/ansible
+RUN apt-get install ansible -y 
 
 # Download, Check checksum and install Jenkins
 ARG JENKINS_SHA=79c2042b30ad71dc9cf17a5877f64eaed405fa03e24e002ca60f8db73b7ad490
