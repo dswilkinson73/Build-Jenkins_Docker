@@ -2,6 +2,7 @@
 Building Jenkins Docker Image
 
 To build the image:
+
 docker build --tag ubuntu_jenkins .
 
 To Run the image:
