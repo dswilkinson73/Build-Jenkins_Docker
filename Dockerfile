@@ -56,6 +56,11 @@ RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubunt
 RUN apt-cache policy docker-ce
 RUN apt-get install docker-ce -y
 
+ADD ./start_docker.sh /.
+
+RUN /bin/bash -c 'chmod +x /start_docker.sh'
+CMD [ "/bin/sh", "/start_docker.sh" ]
+
 ADD ./start_jenkins.sh /.
 
 RUN /bin/bash -c 'chmod +x /start_jenkins.sh'
