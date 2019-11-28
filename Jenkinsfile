@@ -8,7 +8,7 @@ pipeline {
 		      sh 'rm -rf Jenkins-WithTools-Docker.git'
               	      sh 'git clone https://github.com/dswilkinson73/Jenkins-WithTools-Docker.git'
 		      echo "Initialising job - cloning repo"
-                      dir("Jenkins-WithTools-Docker.git) {
+                      dir("Jenkins-WithTools-Docker.git") {
                       sh 'pwd'
                   }
             }
