@@ -26,8 +26,8 @@ pipeline {
             steps {
                      dir("Jenkins-WithTools-Docker") {
                      echo "Upload to Docker Hub"
-                     sh 'docker tag local-image:jenkins-with-tools dswilkinson/jenkins-with-tools'
-                     sh 'docker push dswilkinson/jenkins-with-tools'
+                     sh 'docker tag local-image:jenkins-with-tools:latest dswilkinson/jenkins-with-tools'
+                     sh 'docker push dswilkinson/jenkins-with-tools:latest'
                 }
             }
         }
