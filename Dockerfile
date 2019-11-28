@@ -2,10 +2,33 @@ FROM ubuntu:18.04
 
 LABEL maintainer = "David S. Wilkinson"
 
+ENV TZ=Europe/Amsterdam
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=1000
+ARG gid=1000
+ARG http_port=8080
+ARG agent_port=50000
+ARG JENKINS_HOME=/var/jenkins_home
+ARG REF=/usr/share/jenkins/ref
+
+ENV JENKINS_HOME /var/jenkins_home
+
+RUN groupadd -g ${gid} ${group} \
+    && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
+
+VOLUME /var/jenkins_home
+
 RUN apt-get update && \
+  apt-get install -y software-properties-common && \
   apt-get install default-jre -y && \
-  apt-get install curl unzip -y && \
+  apt-get install curl unzip wget git make -y && \
   apt-get install awscli -y
+
+RUN add-apt-repository -y ppa:ansible/ansible
+RUN apt-get install ansible -y 
 
 # Download, Check checksum and install Jenkins
 ARG JENKINS_SHA=79c2042b30ad71dc9cf17a5877f64eaed405fa03e24e002ca60f8db73b7ad490
