@@ -9,4 +9,6 @@
 *.tfvars
 
 .Dockerfile.swp
+*.swp
+.*.swp
 jenkins.war
