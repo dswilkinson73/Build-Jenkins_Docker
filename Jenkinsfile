@@ -13,11 +13,11 @@ pipeline {
                   }
             }
         }
-        stage('Validate') {
+        stage('Build') {
             steps {
                       dir("Jenkins-WithTools-Docker") {
                       echo "Building Container"
-                      sh 'docker build --tag ubuntu_jenkins .'
+                      sh 'docker build --tag jenkins-with-tools .'
                   }
 		      
             }
@@ -25,8 +25,8 @@ pipeline {
         stage('Deploy') {
             steps {
                      dir("Jenkins-WithTools-Docker") {
-                     echo "Next Step"
-                     sh ''
+                     echo "Upload to Docker Hub"
+                     sh 'docker push dswilkinson/jenkins-with-tools'
                 }
             }
         }
