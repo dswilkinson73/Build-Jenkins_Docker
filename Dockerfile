@@ -21,11 +21,15 @@ RUN groupadd -g ${gid} ${group} \
 
 VOLUME /var/jenkins_home
 
-RUN apt-get update && \
-  apt-get install -y software-properties-common && \
-  apt-get install default-jre -y && \
-  apt-get install curl unzip wget git make -y && \
-  apt-get install awscli -y
+RUN apt-get update && apt-get install -y \
+  software-properties-common \
+  default-jre \
+  curl unzip wget git make \
+  apt-transport-https \
+  ca-certificates \
+#  apt-cache policy docker-ce && \
+#  apt-get install docker-ce -y && \
+  awscli
 
 RUN add-apt-repository -y ppa:ansible/ansible
 RUN apt-get install ansible -y 
@@ -45,6 +49,12 @@ RUN curl -fsSL ${PACKER_URL} -o /usr/local/bin/packer_1.4.4_linux_amd64.zip \
   && echo "${PACKER_SHA}  /usr/local/bin/packer_1.4.4_linux_amd64.zip" | sha256sum -c -
 
 RUN cd /usr/local/bin && unzip packer_1.4.4_linux_amd64.zip && rm packer_1.4.4_linux_amd64.zip
+
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+
+RUN apt-cache policy docker-ce
+RUN apt-get install docker-ce -y
 
 ADD ./start_jenkins.sh /.
 
