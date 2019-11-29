@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-REPOSITORY_ADDRESS = "${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com"
+REPOSITORY_ADDRESS = "${AWS_ACCOUNT_ID}.dkr.ecr.eu-central-1.amazonaws.com"
 
 pipeline {
     agent any
