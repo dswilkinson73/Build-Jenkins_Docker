@@ -27,8 +27,6 @@ RUN apt-get update && apt-get install -y \
   curl unzip wget git make \
   apt-transport-https \
   ca-certificates \
-#  apt-cache policy docker-ce && \
-#  apt-get install docker-ce -y && \
   awscli
 
 RUN add-apt-repository -y ppa:ansible/ansible
@@ -55,11 +53,6 @@ RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubunt
 
 RUN apt-cache policy docker-ce
 RUN apt-get install docker-ce -y
-
-#ADD ./start_docker.sh /.
-#
-#RUN /bin/bash -c 'chmod +x /start_docker.sh'
-#CMD [ "/bin/sh", "/start_docker.sh" ]
 
 ADD ./start_jenkins.sh /.
 

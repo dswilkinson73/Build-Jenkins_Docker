@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+REPOSITORY_ADDRESS = "${AWS_ACCOUNT_ID}.dkr.ecr.eu-central-1.amazonaws.com"
+
 pipeline {
     agent any
     stages {
@@ -26,8 +28,7 @@ pipeline {
             steps {
                      dir("Jenkins-WithTools-Docker") {
                      echo "Upload to Docker Hub"
-                     sh 'docker tag local-image:jenkins-with-tools:latest dswilkinson/jenkins-with-tools'
-                     sh 'docker push dswilkinson/jenkins-with-tools:latest'
+                     sh 'docker push $REPOSITORY_ADDRESS/jenkins-with-tools:latest'
                 }
             }
         }
