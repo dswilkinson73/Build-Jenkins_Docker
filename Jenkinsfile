@@ -28,7 +28,9 @@ pipeline {
             steps {
                      dir("Jenkins-WithTools-Docker") {
                      echo "Upload to Docker Hub"
-                     sh 'docker push $REPOSITORY_ADDRESS/jenkins-with-tools:latest'
+                     sh "aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION} | sh"
+                     sh "docker tag jenkins-with-tools:latest ${REPOSITORY_ADDRESS}/jenkins-with-tools:latest"
+                     sh "docker push $REPOSITORY_ADDRESS/jenkins-with-tools"
                 }
             }
         }
