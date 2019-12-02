@@ -2,11 +2,11 @@
 Building Jenkins Docker Image
 
 - build the image:
-docker build --tag Jenkins-WithTools-Docker .
+docker build --tag jenkins-withTools-docker .
 
 - Run the image:
-docker run -p 8081:8081 -p 50001:50001 -it Jenkins-WithTools-Docker
+docker run -p 8081:8081 -p 50001:50001 -it jenkins-withTools-docker
 
 - Run the image with a volume:
-docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home Jenkins-WithTools-Docker
+docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins-withTools-docker
 
