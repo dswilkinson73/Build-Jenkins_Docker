@@ -2,6 +2,7 @@
 
 REPOSITORY_ADDRESS = "${AWS_ACCOUNT_ID}.dkr.ecr.eu-central-1.amazonaws.com"
 PROJECT_NAME = "jenkins-withtools-docker"
+GITHUB_ID = "dswilkinson73"
 
 pipeline {
     agent any
@@ -9,7 +10,7 @@ pipeline {
         stage('Initialise') {
             steps {
 		      sh "rm -rf ${PROJECT_NAME} "
-              	      sh "git clone https://github.com/dswilkinson73/${PROJECT_NAME}.git"
+		      sh "git clone https://github.com/${GITHUB_ID}/${PROJECT_NAME}.git"
 		      echo "Initialising job - cloning ${PROJECT_NAME} repository"
                       dir("${PROJECT_NAME}") {
                       sh 'pwd'
@@ -31,8 +32,8 @@ pipeline {
                      echo "Uploading ${PROJECT_NAME} to AWS"
                      sh "aws ecr describe-repositories --repository-names ${PROJECT_NAME} || aws ecr create-repository --repository-name ${PROJECT_NAME}"
                      sh "aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION} | sh"
-                     sh "docker tag jenkins-with-tools:latest ${REPOSITORY_ADDRESS}/${PROJECT_NAME}:latest"
-                     sh "docker push $REPOSITORY_ADDRESS/${PROJECT_NAME}"
+                     sh "docker tag ${PROJECT_NAME}:latest ${REPOSITORY_ADDRESS}/${PROJECT_NAME}:latest"
+	             sh "docker push ${REPOSITORY_ADDRESS}/${PROJECT_NAME}"
                 }
             }
         }
