@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-REPOSITORY_ADDRESS = "${AWS_ACCOUNT_ID}.dkr.ecr.eu-central-1.amazonaws.com"
+REPOSITORY_ADDRESS = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
 PROJECT_NAME = "jenkins-withtools-docker"
 GITHUB_ID = "dswilkinson73"
 
@@ -22,8 +22,7 @@ pipeline {
                       dir("${PROJECT_NAME}") {
                       echo "Building the ${PROJECT_NAME} Container"
                       sh "docker build --tag ${PROJECT_NAME} ."
-                  }
-		      
+                  }	      
             }
         }
         stage('Deploy') {
@@ -33,7 +32,7 @@ pipeline {
                      sh "aws ecr describe-repositories --repository-names ${PROJECT_NAME} || aws ecr create-repository --repository-name ${PROJECT_NAME}"
                      sh "aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION} | sh"
                      sh "docker tag ${PROJECT_NAME}:latest ${REPOSITORY_ADDRESS}/${PROJECT_NAME}:latest"
-	             sh "docker push ${REPOSITORY_ADDRESS}/${PROJECT_NAME}"
+                     sh "docker push ${REPOSITORY_ADDRESS}/${PROJECT_NAME}"
                 }
             }
         }
